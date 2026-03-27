@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/context/AuthContext';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function DashboardPage() {
@@ -10,7 +11,14 @@ export default function DashboardPage() {
   const [winners, setWinners] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const router = useRouter();
+
   useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/login');
+      return;
+    }
+
     async function loadData() {
       if (!user) return;
       const [scoresRes, winnersRes] = await Promise.all([
@@ -21,8 +29,9 @@ export default function DashboardPage() {
       setWinners(winnersRes.data || []);
       setLoading(false);
     }
-    if (!authLoading) loadData();
-  }, [user, authLoading]);
+
+    loadData();
+  }, [user, authLoading, router, supabase]);
 
   if (authLoading || loading) {
     return (

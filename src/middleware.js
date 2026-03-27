@@ -28,8 +28,10 @@ export async function middleware(request) {
   const { data: { user } } = await supabase.auth.getUser();
   const { pathname } = request.nextUrl;
 
-  // Protected routes: redirect to login if not authenticated
-  if ((pathname.startsWith('/dashboard') || pathname.startsWith('/admin')) && !user) {
+  // We rely on client-side auth guards for dashboard / admin now (server cookie sync is not enabled). 
+  // Keep this middleware for admin protection in cases where cookies are available.
+  // For dashboard, render page and let client redirect after auth is initialized.
+  if (pathname.startsWith('/admin') && !user) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
     return NextResponse.redirect(url);
