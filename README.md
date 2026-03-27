@@ -1,166 +1,94 @@
-# Golf Charity Platform
+# 🏌️ Golf Charity Subscription Platform
 
-A modern web application that combines golf scoring with charitable giving. Players can subscribe, track their Stableford scores, and enter monthly prize draws while supporting their chosen charities.
+A modern, full-stack SaaS platform that combines **golf performance tracking**, **monthly prize draws**, and **charitable contributions** into a single engaging experience.
 
-## ✨ Features
+## ✨ Overview
 
-- **User Authentication**: Secure signup and login with Supabase Auth
-- **Charity Selection**: Choose from featured charities to support
-- **Score Tracking**: Log Stableford scores (1-45 points)
-- **Monthly Draws**: Automatic prize draws based on recent scores
-- **Admin Dashboard**: Manage charities, users, draws, and reports
-- **Responsive Design**: Mobile-first UI with glassmorphism effects
-- **Real-time Updates**: Live score and draw status updates
+This platform allows users to:
 
-## 🛠️ Tech Stack
+* Track their latest golf scores (Stableford format)
+* Automatically enter monthly draw-based prize pools
+* Win rewards based on their performance
+* Contribute to meaningful causes through integrated charity support
 
-- **Frontend**: Next.js 16, React 19, Tailwind CSS
-- **Backend**: Supabase (PostgreSQL, Auth, RLS)
-- **Deployment**: Vercel
-- **Styling**: Custom CSS with CSS Variables
-- **Icons**: Emoji and custom SVGs
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn
-- Supabase account
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/golf-charity-platform.git
-   cd golf-charity-platform
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up Supabase**
-   - Create a new Supabase project
-   - Run the schema SQL from `supabase/schema.sql`
-   - Run the RLS fixes from `supabase/fix-rls-recursion.sql`
-   - Copy your project URL and anon key
-
-4. **Environment Variables**
-   Create `.env.local`:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   ```
-
-5. **Run development server**
-   ```bash
-   npm run dev
-   ```
-
-6. **Open [http://localhost:3000](http://localhost:3000)**
-
-## 📁 Project Structure
-
-```
-golf-charity-platform/
-├── src/
-│   ├── app/                 # Next.js app router pages
-│   │   ├── admin/          # Admin dashboard
-│   │   ├── api/            # API routes
-│   │   ├── dashboard/      # User dashboard
-│   │   └── ...
-│   ├── components/         # Reusable React components
-│   ├── context/            # React context providers
-│   └── lib/                # Utility functions
-├── supabase/               # Database schema and migrations
-├── public/                 # Static assets
-└── ...
-```
-
-## 🗄️ Database Schema
-
-### Core Tables
-- **users**: User profiles with charity preferences
-- **charities**: Charity organizations
-- **scores**: Golf scores (Stableford format)
-- **draws**: Monthly prize draws
-- **winners**: Draw winners
-- **prize_pool**: Available prizes
-
-### Key Features
-- Row Level Security (RLS) enabled
-- Public read access for charities
-- User-scoped access for scores and profiles
-- Admin-only management operations
-
-## 🔧 Development
-
-### Available Scripts
-
-```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run start    # Start production server
-npm run lint     # Run ESLint
-```
-
-### Code Style
-
-- Uses ESLint with Next.js config
-- Prettier for code formatting
-- Tailwind CSS for styling
-- Component-based architecture
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. **Connect GitHub Repository**
-   - Import your repo to Vercel
-   - Auto-detects Next.js settings
-
-2. **Environment Variables**
-   - Add Supabase URL and keys in Vercel dashboard
-
-3. **Deploy**
-   - Automatic deployments on push
-   - Custom domain support
-
-### Manual Deployment
-
-```bash
-npm run build
-npm run start
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Built with [Next.js](https://nextjs.org)
-- Powered by [Supabase](https://supabase.com)
-- Styled with [Tailwind CSS](https://tailwindcss.com)
-- Deployed on [Vercel](https://vercel.com)
-
-## 📞 Support
-
-For questions or issues:
-- Open an issue on GitHub
-- Check the documentation
-- Review the TODO.md for planned features
+It is designed to feel like a **premium fintech + gaming experience**, rather than a traditional sports platform.
 
 ---
 
-**Happy Golfing & Giving! ⛳💚**
+## 🚀 Key Features
+
+### 🎯 Score Tracking System
+
+* Users can submit their latest 5 golf scores
+* Automatic rolling logic (oldest score replaced)
+* Clean and intuitive input experience
+
+### 🎲 Monthly Draw Engine
+
+* Lottery-style draw system based on user scores
+* Multiple reward tiers (3-match, 4-match, 5-match)
+* Jackpot rollover mechanism
+
+### 💰 Prize Pool System
+
+* Dynamic prize pool based on active subscribers
+* Transparent distribution logic
+* Real-time updates
+
+### ❤️ Charity Integration
+
+* Users select a charity during signup
+* A portion of every subscription is donated
+* Focus on real-world impact, not just gameplay
+
+### 📊 User Dashboard
+
+* Track scores, winnings, and participation
+* View subscription status
+* Monitor charity contributions
+
+### 🛠️ Admin Panel
+
+* Manage users and subscriptions
+* Configure and run draws
+* Verify winners and payouts
+* Manage charities and analytics
+
+---
+
+## 🎨 UI/UX Highlights
+
+* Premium, modern design inspired by SaaS platforms like Stripe & Vercel
+* Glassmorphism and motion-based UI
+* Interactive components and micro-animations
+* Emotion-driven design focusing on **impact + excitement**
+
+---
+
+## 🧱 Tech Stack
+
+* Frontend: React / Next.js + Tailwind CSS
+* Backend: Node.js / Express
+* Database: Supabase / PostgreSQL
+* Deployment: Vercel
+
+---
+
+## 📈 Why This Project Stands Out
+
+* Combines **gamification + real-world impact**
+* Focus on both **user engagement and meaningful contribution**
+* Built with scalability and product thinking in mind
+* Designed as a **real startup-ready product**, not just a demo
+
+---
+
+## 🔗 Live Demo
+
+👉 https://golf-charity-platform-teal-rho.vercel.app/
+
+---
+
+## 👨‍💻 Author
+
+Built with a focus on creating impactful, scalable, and user-centric applications.

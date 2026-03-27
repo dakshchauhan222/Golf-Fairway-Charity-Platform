@@ -42,8 +42,8 @@ export default function SubscribePage() {
   };
 
   return (
-    <div className="page-container" style={{ maxWidth: '700px' }}>
-      <div className="section-header" style={{ textAlign: 'center' }}>
+    <div className="page-container" style={{ width: '100%', maxWidth: '1000px', margin: '0 auto', padding: '40px 24px' }}>
+      <div className="section-header" style={{ textAlign: 'center', marginBottom: '40px' }}>
         <h1>Choose Your <span className="gradient-text">Plan</span></h1>
         <p>Subscribe to enter monthly draws and support charity</p>
       </div>
@@ -58,9 +58,10 @@ export default function SubscribePage() {
 
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-        gap: '20px',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gap: '28px',
         marginBottom: '32px',
+        alignItems: 'start',
       }}>
         {Object.entries(plans).map(([key, plan]) => (
           <div
@@ -68,12 +69,19 @@ export default function SubscribePage() {
             onClick={() => setSelectedPlan(key)}
             className="glass-card"
             style={{
-              padding: '32px',
+              padding: '34px 30px',
               cursor: 'pointer',
-              borderColor: selectedPlan === key ? 'var(--color-primary)' : undefined,
-              background: selectedPlan === key ? 'rgba(99, 102, 241, 0.08)' : undefined,
+              borderColor: selectedPlan === key ? 'var(--color-primary)' : 'rgba(255,255,255,0.15)',
+              background: selectedPlan === key ? 'rgba(99, 102, 241, 0.1)' : 'rgba(15, 15, 15, 0.74)',
+              border: '1px solid rgba(255,255,255,0.18)',
+              borderRadius: '24px',
+              boxShadow: selectedPlan === key ? '0 25px 60px rgba(232,255,0,0.28)' : '0 18px 40px rgba(0,0,0,0.4)',
               position: 'relative',
               textAlign: 'center',
+              minHeight: '640px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
             }}
           >
             {plan.save && (
@@ -91,14 +99,17 @@ export default function SubscribePage() {
                 Save {plan.save}
               </div>
             )}
-            <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '8px' }}>{plan.label}</h3>
-            <div style={{ fontSize: '2.5rem', fontWeight: '900', marginBottom: '4px' }}>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: '700', marginBottom: '10px', letterSpacing: '0.04em' }}>{plan.label}</h3>
+            <div style={{ fontSize: '3.5rem', fontWeight: '900', marginBottom: '6px', lineHeight: 1 }}>
               <span className="gradient-text">£{plan.price}</span>
             </div>
-            <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', marginBottom: '20px' }}>
-              {plan.period}
+            <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.95rem', fontWeight: 600, marginBottom: '18px' }}>
+              {plan.period} • {plan.days} days access
             </div>
-            <ul style={{ textAlign: 'left', color: 'var(--color-text-secondary)', fontSize: '0.85rem', listStyle: 'none', padding: 0 }}>
+            <div style={{ color: 'rgba(232, 255, 0, 0.95)', fontSize: '0.90rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '14px' }}>
+              {plan.save ? `SAVE ${plan.save}` : 'Flex billing'}
+            </div>
+            <ul style={{ textAlign: 'left', color: 'var(--color-text-secondary)', fontSize: '0.95rem', listStyle: 'none', padding: 0, flexGrow: 1 }}>
               {[
                 'Monthly prize draw entry',
                 'Track up to 5 scores',
@@ -119,7 +130,7 @@ export default function SubscribePage() {
         className="btn-primary"
         onClick={handleSubscribe}
         disabled={processing || profile?.subscription_status === 'active'}
-        style={{ width: '100%', justifyContent: 'center', padding: '16px', fontSize: '1.05rem' }}
+        style={{ width: '100%', justifyContent: 'center', padding: '18px', fontSize: '1.15rem', borderRadius: '14px' }}
       >
         {processing ? 'Processing...' : `Subscribe — £${plans[selectedPlan].price}${plans[selectedPlan].period}`}
       </button>

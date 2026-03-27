@@ -4,9 +4,9 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: 'GolfCharity - Play Golf, Win Prizes, Support Charities',
-  description: 'A subscription platform that combines golf performance tracking, monthly prize draws, and meaningful charity contributions. Subscribe, play, and make a difference.',
-  keywords: 'golf, charity, subscription, prize draw, stableford, scores',
+  title: 'FAIRWAY — Score. Draw. Give.',
+  description: 'Golf scores as lottery numbers. Monthly prizes. Guaranteed charity impact. A subscription platform where every game you play contributes to something bigger.',
+  keywords: 'golf, charity, subscription, prize draw, stableford, monthly lottery',
 };
 
 export default function RootLayout({ children }) {

@@ -2,153 +2,68 @@
 
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Navbar() {
   const { user, profile, signOut, loading } = useAuth();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <nav style={{
-      background: 'rgba(15, 23, 42, 0.85)',
-      backdropFilter: 'blur(20px)',
-      borderBottom: '1px solid rgba(51, 65, 85, 0.5)',
-      position: 'sticky',
-      top: 0,
-      zIndex: 40,
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+      background: scrolled ? 'rgba(12,12,12,0.98)' : 'transparent',
+      borderBottom: scrolled ? '1px solid #2A2A2A' : 'none',
+      transition: 'background 300ms, border-color 300ms',
     }}>
       <div style={{
-        maxWidth: '1280px',
-        margin: '0 auto',
-        padding: '0 24px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        height: '72px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 48px', height: '64px',
       }}>
-        {/* Logo */}
-        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '12px',
-            background: 'var(--gradient-primary)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '1.2rem',
-          }}>
-            🏆
-          </div>
-          <span style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--color-text-primary)' }}>
-            Golf<span style={{ color: 'var(--color-primary-light)' }}>Charity</span>
-          </span>
+        <Link href="/" style={{
+          fontSize: '13px', fontWeight: 500, letterSpacing: '0.3em',
+          textTransform: 'uppercase', color: '#F0EDE8', fontFamily: 'var(--font-sans)',
+        }}>
+          FAIRWAY
         </Link>
 
-        {/* Desktop Links */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '32px',
-        }}
-        className="desktop-nav"
-        >
-          <Link href="/" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: '500', transition: 'color 0.2s' }}>
-            Home
-          </Link>
-          <Link href="/charities" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: '500', transition: 'color 0.2s' }}>
-            Charities
-          </Link>
-          {!loading && user && (
-            <>
-              <Link href="/dashboard" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: '500' }}>
-                Dashboard
-              </Link>
-              {profile?.role === 'admin' && (
-                <Link href="/admin" style={{ color: 'var(--color-accent)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: '600' }}>
-                  Admin
-                </Link>
-              )}
-            </>
-          )}
-        </div>
+        <div style={{ flex: 1 }} />
 
-        {/* Auth buttons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }} className="desktop-nav">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
           {!loading && !user && (
             <>
-              <Link href="/login" className="btn-secondary" style={{ padding: '8px 20px', fontSize: '0.85rem' }}>
-                Log In
-              </Link>
-              <Link href="/signup" className="btn-primary" style={{ padding: '8px 20px', fontSize: '0.85rem' }}>
-                Sign Up
-              </Link>
+              <Link href="/signup" className="nav-link">Subscribe</Link>
+              <span style={{ width: 1, height: 16, background: '#2A2A2A', margin: '0 16px' }} />
+              <Link href="/login" className="nav-link">Sign In</Link>
             </>
           )}
           {!loading && user && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem' }}>
+            <>
+              <Link href="/dashboard" className="nav-link">Dashboard</Link>
+              {profile?.role === 'admin' && (
+                <>
+                  <span style={{ width: 1, height: 16, background: '#2A2A2A', margin: '0 16px' }} />
+                  <Link href="/admin" className="nav-link" style={{ color: '#E8FF00' }}>Admin</Link>
+                </>
+              )}
+              <span style={{ width: 1, height: 16, background: '#2A2A2A', margin: '0 16px' }} />
+              <span style={{ fontSize: 13, color: '#5C5C5C', padding: '0 16px', fontFamily: 'var(--font-sans)' }}>
                 {profile?.name || user.email}
               </span>
-              <button onClick={signOut} className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>
-                Log Out
-              </button>
-            </div>
+              <button onClick={signOut} className="nav-link">Sign Out</button>
+            </>
           )}
         </div>
-
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="mobile-nav-toggle"
-          style={{
-            display: 'none',
-            background: 'none',
-            border: 'none',
-            color: 'var(--color-text-primary)',
-            fontSize: '1.5rem',
-            cursor: 'pointer',
-          }}
-        >
-          {mobileOpen ? '✕' : '☰'}
-        </button>
       </div>
 
-      {/* Mobile Menu */}
-      {mobileOpen && (
-        <div style={{
-          padding: '16px 24px',
-          borderTop: '1px solid var(--color-border)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
-        }}
-        className="mobile-menu"
-        >
-          <Link href="/" onClick={() => setMobileOpen(false)} style={{ color: 'var(--color-text-secondary)', textDecoration: 'none' }}>Home</Link>
-          <Link href="/charities" onClick={() => setMobileOpen(false)} style={{ color: 'var(--color-text-secondary)', textDecoration: 'none' }}>Charities</Link>
-          {user && (
-            <>
-              <Link href="/dashboard" onClick={() => setMobileOpen(false)} style={{ color: 'var(--color-text-secondary)', textDecoration: 'none' }}>Dashboard</Link>
-              {profile?.role === 'admin' && (
-                <Link href="/admin" onClick={() => setMobileOpen(false)} style={{ color: 'var(--color-accent)', textDecoration: 'none' }}>Admin</Link>
-              )}
-              <button onClick={() => { signOut(); setMobileOpen(false); }} className="btn-secondary" style={{ width: 'fit-content' }}>Log Out</button>
-            </>
-          )}
-          {!user && (
-            <>
-              <Link href="/login" onClick={() => setMobileOpen(false)} className="btn-secondary" style={{ width: 'fit-content' }}>Log In</Link>
-              <Link href="/signup" onClick={() => setMobileOpen(false)} className="btn-primary" style={{ width: 'fit-content' }}>Sign Up</Link>
-            </>
-          )}
-        </div>
-      )}
-
-      <style jsx>{`
+      <style>{`
         @media (max-width: 768px) {
-          .desktop-nav { display: none !important; }
-          .mobile-nav-toggle { display: block !important; }
+          nav > div { padding: 0 24px !important; height: 56px !important; }
         }
       `}</style>
     </nav>
