@@ -85,7 +85,7 @@ It is designed to feel like a **premium fintech + gaming experience**, rather th
 
 ## 🔗 Live Demo
 
-👉 https://golf-charity-platform-teal-rho.vercel.app/
+👉 https://golf-fairway-charity-platform.vercel.app/
 
 ---
 
